@@ -11,11 +11,13 @@ return elements in Last In First Out order.
    implementing a Stack?
 """
 
+from linked_list import LinkedList
+
 
 class Stack:
     def __init__(self):
         self.size = 0
-        self.storage = []
+        self.storage = LinkedList()
 
     def __len__(self):
         # returns size attr for the declared stack
@@ -23,7 +25,7 @@ class Stack:
 
     def push(self, value):
         # adds value to the end of the stack
-        self.storage.append(value)
+        self.storage.add_to_head(value)
 
         # update size when added
         self.size = self.size + 1
@@ -32,16 +34,16 @@ class Stack:
 
     def pop(self):
         # what if there is no stack
-        if not self.storage:
+        if not self.storage.head:
             return None
-        # what if there is someone in stack
+        # what if there is something in stack
         else:
             # stacks return elements that we're removed
             # saving it for later
-            value = self.storage[-1]
+            value = self.storage.head.get_value()
             # deleting last value from storage
-            del self.storage[-1]
-
-            # has to remove whatever at the end of the stack
+            # has to remove whatever at the top most recently added of the stack
+            self.storage.remove_from_head()
+            # remove value amt from size
             self.size = self.size - 1
         return value
