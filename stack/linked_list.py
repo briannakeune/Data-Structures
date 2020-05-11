@@ -70,6 +70,9 @@ class LinkedList:
         # value -> current.head
         # ^ proccess must happen through all of the linked lists nodes.
 
+        # takes value and turns it into new head
+        # and places the previous list as the as the new next node?
+        # ^ I'll put this in python tutor later to visual more
         self.head = Node(value, self.head)
 
     def remove_from_head(self):
