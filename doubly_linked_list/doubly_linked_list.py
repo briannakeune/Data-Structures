@@ -27,13 +27,17 @@ class DoublyLinkedList:
         self.length += 1
         # wraps the given value in a ListNode
         new_node = ListNode(value)
-        # prev's head data
-        prev_head = self.head
-        # inserts it as the new head
-        self.head = new_node
-        # handle the previous head's prev pointer
-        # to point to the new head
-        prev_head.prev = self.head
+        # no list has started
+        if self.head is None and self.tail is None:
+            self.head, self.tail = new_node, new_node
+        else:
+            # prev's head data
+            prev_head = self.head
+            # inserts it as the new head
+            self.head = new_node
+            # handle the previous head's prev pointer
+            # to point to the new head
+            prev_head.prev = self.head
 
     """
     Deletes the current node of that is classified as the head,
@@ -45,12 +49,15 @@ class DoublyLinkedList:
         self.length -= 1
         # hold head data
         to_remove = self.head
-        # removes the head value
-        self.head.remove()
-        # updating the list head to the removed head's next value
-        self.head = to_remove.next
+        if self.head is self.tail:
+            self.head, self.tail = None, None
+        else:
+            # removes the head value
+            self.head.remove()
+            # updating the list head to the removed head's next value
+            self.head = to_remove.next
         # returns the value of the removed node
-        return str(to_remove.value)
+        return to_remove.value
 
     """
     Takes a value and sets it to the tail position of list,
