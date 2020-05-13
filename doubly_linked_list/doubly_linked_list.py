@@ -75,8 +75,8 @@ class DoublyLinkedList:
         else:
             # prev's tail data
             prev_tail = self.tail
-            # insert is as the new tail
-            self.tail = new_node
+            # insert is as the new tail, with previous pointer
+            self.tail = ListNode(value, self.tail)
             # handle previous tails next pointer
             # to point to new tail
             prev_tail.next = self.tail
