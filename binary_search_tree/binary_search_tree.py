@@ -8,10 +8,13 @@ class BSTNode:
     def insert(self, value):
         # wrap value into Node to be inserted into tree
         new_node = BSTNode(value)
+
+        """
         # should I check if this value is already in the tree?
         # if it's in the tree return none
         if self.contains(value):
             return None
+        """
         # compare value to root for placement
         if value < self.value:
             # check self.left, if no value, place there
@@ -21,6 +24,8 @@ class BSTNode:
             else:
                 self.left.insert(value)
         else:
+            # this will currently set equal values to the right property
+            # for dupe_insert_test
             if not self.right:
                 self.right = new_node
             else:
@@ -67,7 +72,16 @@ class BSTNode:
     # Call the function `fn` on the value of each node
 
     def for_each(self, fn):
-        pass
+        # wrap function with current value
+        fn(self.value)
+        # helps find end of for each function
+        if not self:
+            return None
+        if self.left or self.right:
+            if self.left:
+                self.left.for_each(fn)
+            if self.right:
+                self.right.for_each(fn)
 
     """Part 2 -----------------------"""
 
