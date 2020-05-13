@@ -136,7 +136,7 @@ class DoublyLinkedList:
         # update self.length
         self.length -= 1
         # removes a node from the list
-        node.delete()
+        node.remove()
         # handles cases where the node was the head or the tail
 
     """Returns the highest value currently in the list"""
