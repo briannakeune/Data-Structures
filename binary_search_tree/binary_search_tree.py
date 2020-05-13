@@ -6,9 +6,8 @@ class BSTNode:
 
     # Insert the given value into the tree
     def insert(self, value):
-        # wrap value into Node
+        # wrap value into Node to be inserted into tree
         new_node = BSTNode(value)
-        # value = new_node.value
         # should I check if this value is already in the tree?
         # if it's in the tree return none
         if self.contains(value):
@@ -51,11 +50,22 @@ class BSTNode:
 
     # Return the maximum value found in the tree
     def get_max(self):
-        # this should have to go through only the right path?
-        # i'll have to draw this one out
-        pass
+        # I already know that the max
+        # value should be the most right value
+
+        # check if self exists
+        if not self:
+            return None
+        # hold the current value that is higher
+        current_max = self
+        # continues to get the right value, until self.value is none
+        while current_max.right is not None:
+            # set the max value to var to return value
+            current_max = current_max.right
+        return current_max.value
 
     # Call the function `fn` on the value of each node
+
     def for_each(self, fn):
         pass
 
