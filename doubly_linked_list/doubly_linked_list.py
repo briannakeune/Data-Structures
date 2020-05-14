@@ -1,4 +1,43 @@
-from list_node import ListNode
+class ListNode:
+    def __init__(self, value, prev=None, next=None):
+        self.value = value
+        self.prev = prev
+        self.next = next
+
+    """
+    Inserts a given value to be the next of the node invoked on, 
+    while creating given value as a class of node
+    """
+
+    def insert_after(self, value):
+        current_next = self.next
+        self.next = ListNode(value, self, current_next)
+        if current_next:
+            current_next.prev = self.next
+
+    """
+    Inserts a given value to be the prev of the node invoked on,
+    while creating given value as a class of node
+    """
+
+    def insert_before(self, value):
+        current_prev = self.prev
+        self.prev = ListNode(value, current_prev, self)
+        if current_prev:
+            current_prev.next = self.prev
+
+    """
+    Removes node invoke on, 
+    and links up that nodes prev, and next 
+    to create a continuous linked list
+    """
+
+    def remove(self):
+        if self.prev:
+            self.prev.next = self.next
+        if self.next:
+            self.next.prev = self.prev
+
 
 """
 List nodes have method options:
@@ -34,7 +73,7 @@ class DoublyLinkedList:
             # prev's head data
             prev_head = self.head
             # inserts it as the new head
-            self.head = new_node
+            self.head = ListNode(value, None, prev_head)
             # handle the previous head's prev pointer
             # to point to the new head
             prev_head.prev = self.head
@@ -98,6 +137,7 @@ class DoublyLinkedList:
             # removes the tail value
             self.tail.remove()
             # updating the list tail to the removed tail's prev value
+            self.tail = to_remove.prev
             # returns the value of the removed node
         return to_remove.value
 
@@ -109,9 +149,14 @@ class DoublyLinkedList:
     """
 
     def move_to_front(self, node):
+        if node is self.head:
+            return None
+        new_head = node
         # removes the input node
+        self.length -= 1
+        node.remove()
         # inserts input node as new head of list
-        pass
+        self.add_to_head(new_head.value)
 
     """
     Takes any list node and moves it to become the
@@ -121,9 +166,17 @@ class DoublyLinkedList:
     """
 
     def move_to_end(self, node):
+        if node is self.tail:
+            return None
+        new_tail = node
         # remove the input node from it's current spot
+        if node is self.head:
+            self.remove_from_head()
+        else:
+            node.remove()
+            self.length -= 1
         # inserts input node as new tail of list
-        pass
+        self.add_to_tail(new_tail.value)
 
     """
     Removes a node from any where in the dll,
@@ -136,8 +189,15 @@ class DoublyLinkedList:
         # update self.length
         self.length -= 1
         # removes a node from the list
-        node.remove()
         # handles cases where the node was the head or the tail
+        if len(self) is 0:
+            return None
+        elif node is self.head:
+            self.remove_from_head()
+        elif node is self.tail:
+            self.remove_from_tail()
+        else:
+            node.remove()
 
     """Returns the highest value currently in the list"""
 
